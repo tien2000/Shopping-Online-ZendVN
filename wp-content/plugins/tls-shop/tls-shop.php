@@ -21,3 +21,6 @@ if(is_admin()){
     require 'frontend.php';
     new Tls_Sp_Frontend();
 }
+
+$tController->getController('AdminProduct', 'backend');
+$tController->getController('AdminCategory', 'backend');
