@@ -3,6 +3,10 @@
         
         public function __construct() {
             add_action('admin_menu', array($this, 'modify_admin_menus'));
+            
+            if (isset($_GET['post_type']) && $_GET['post_type'] == 'tsproduct'){
+                add_action('admin_enqueue_scripts', array($this, 'add_js'));
+            }            
         }
         
         // ================= Viết lại đường dẫn cho Product & Category =================== //
@@ -20,5 +24,11 @@
             }
             $submenu['tls-sp-manager'] = $tls_sp_manager;
             remove_menu_page('edit.php?post_type=tsproduct');
+        }
+        
+        public function add_js() {
+            global $tController;
+            $url = $tController->getJSUrl('admin_menu');
+            wp_enqueue_script('tls_sp_admin_menu', $url, array('jquery'), '1.0.0', true);
         }
     }
