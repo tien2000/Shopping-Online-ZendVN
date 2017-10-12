@@ -8,7 +8,7 @@
         public function display() {
             //echo '<br>' . __METHOD__;
             
-            global $tController;
+            global $tController;            
             $tController->getView('shopping/display.php', 'backend');
         }
     }
