@@ -13,11 +13,25 @@
         
         public function dispatch_function(){
             global $tController;
-            echo $tController->getParams('action');
+            
+            $action = $tController->getParams('action');
+            switch ($action){
+                case 'add'      : $this->add(); break;
+                case 'edit'     : $this->edit(); break;
+                case 'delete'   : $this->delete(); break;
+                
+                case 'active'   : 
+                case 'inactive' : $this->status(); break;
+                
+                default         : $this->display(); break;
+            }
         }
         
         public function display() {
-            echo '<br>' . __METHOD__;
+            //echo '<br>' . __METHOD__;
+            global $tController;
+            
+            $tController->getView('display', 'backend/manufacturer');            
         }
         
         public function add() {
