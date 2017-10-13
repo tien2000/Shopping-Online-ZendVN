@@ -12,6 +12,19 @@
             
         }
         
+        public function getParams($name = null){
+            /* echo '<pre>';
+            print_r($_REQUEST);
+            echo '</pre>'; */
+            
+            if ($name == null || empty($name)){
+                return $_REQUEST;
+            }else {
+                $val = (isset($_REQUEST[$name]))?$_REQUEST[$name]:'';
+                return $val;
+            }
+        }
+        
         public function getController($fileName = '', $dir = '') {
             //echo '<br>' . __FILE__;
             
