@@ -31,7 +31,7 @@
             //echo '<br>' . __METHOD__;
             global $tController;
             
-            $tController->getView('display', 'backend/manufacturer');            
+            $tController->getView('display.php', 'backend/manufacturer');            
         }
         
         public function add() {
