@@ -7,9 +7,16 @@
 
 <?php
     class tController{
+        public $_error = array();
+        public $_data   = array();
         
         public function __construct($options = array()) {
             
+        }
+        
+        public function isPost(){
+            $flag = ($_SERVER['REQUEST_METHOD']=='POST')?true:false;
+            return $flag;
         }
         
         public function getParams($name = null){
@@ -17,12 +24,12 @@
             print_r($_REQUEST);
             echo '</pre>'; */
             
-            if ($name == null || empty($name)){
-                return $_REQUEST;
-            }else {
-                $val = (isset($_REQUEST[$name]))?$_REQUEST[$name]:'';
-                return $val;
-            }
+            if($name == null || empty($name)){
+    			return $_REQUEST;
+    		}else{
+    			$val = (isset($_REQUEST[$name]))?$_REQUEST[$name]:'';
+    			return $val;
+    		}
         }
         
         public function getController($fileName = '', $dir = '') {
