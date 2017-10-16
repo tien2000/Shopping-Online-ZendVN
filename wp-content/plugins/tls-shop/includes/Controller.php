@@ -75,7 +75,7 @@
             $file = TLS_SP_TEMPLATE_PATH . DS . $dir . DS . $fileName;
             //echo '<br>' . $file;
             
-            if (file_exists($file)){
+            if(file_exists($file)){
                 require_once $file;
             }
         }

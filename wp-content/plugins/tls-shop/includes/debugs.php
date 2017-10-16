@@ -24,7 +24,7 @@
         }
         
         public function debug_output() {
-            echo '<br>' . __METHOD__;
+            //echo '<br>' . __METHOD__;
             $obj = $_GET['obj'];
             
             $tmp = array();

@@ -5,8 +5,8 @@
     print_r($tController);
     echo '</pre>';
     
-    $page = $tController->getParams('page');
-    $action     = ($tController->getParams('action') != '')?$tController->getParams('action'):'add';
+    $page   = $tController->getParams('page');    
+    $action = ($tController->getParams('action') != '')? $tController->getParams('action'):'add';
     
     // Label
     $lbl = __('Add New Manufacturer');
