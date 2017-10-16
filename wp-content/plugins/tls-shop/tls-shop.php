@@ -15,6 +15,10 @@ global $tController;
 $tController = new tController();
 
 if(is_admin()){
+    if(!class_exists('TlsHtml')){
+        require_once TLS_SP_INLCUDE_PATH . DS . 'html.php';
+    }
+    
     require_once 'backend.php';
     new Tls_Sp_Backend();
     $tController->getHelper('AdminMenu');

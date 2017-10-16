@@ -12,8 +12,11 @@
         }
         
         public function menus() {
+            global $tController;
+            $iconUrl = $tController->getImagesUrl('shopping.png', 'icons/');
+            
             add_menu_page('tShopping', 'tShopping', 'manage_options', $this->_menuSlug, 
-                            array($this, 'dispatch_function'), '', 3);
+                            array($this, 'dispatch_function'), $iconUrl, 3);
             
             add_submenu_page($this->_menuSlug, 'Dashboard', 'Dashboard', 'manage_options',
                             $this->_menuSlug, array($this, 'dispatch_function'));

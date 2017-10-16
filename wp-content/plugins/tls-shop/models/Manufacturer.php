@@ -37,7 +37,7 @@
             ));
         }
         
-        /* public function get_bulk_actions(){
+        public function get_bulk_actions(){
             $action = array(
                 'delete'    => 'Delete',
                 'active'    => 'Active',
@@ -45,7 +45,64 @@
             );
         
             return $action;
-        } */
+        }
+        
+        protected function extra_tablenav($which){
+            /* echo '<pre>';
+             print_r($which);
+             echo '</pre>'; */
+        
+            if($which == 'top'){
+                $htmlObj = new TlsHtml();
+                $filterVal = @$_REQUEST['filter_status'];
+                $options['data'] = array(
+                    '0'         => 'Status filter',
+                    'active'    => 'Active',
+                    'inactive'  => 'Inactive',
+                );
+        
+                $attr = array(
+                    'id'    => 'filter_action',
+                    'class' => 'button'
+                );
+        
+                $btnFilter = $htmlObj->button('filter_action', 'Filter', $attr);
+                $slbFilter = $htmlObj->selectbox('filter_status', $filterVal, array(), $options);
+        
+                $html = '<div class="alignleft actions bulkactions">'
+                        . $slbFilter
+                        . $btnFilter
+                        . '</div>';
+        
+                    echo $html;
+            }
+        }
+        
+        public function column_status( $item ){
+            global $tController;
+            $page = $tController->getParams('page');
+            $paged = max(1, @$_REQUEST['paged']);       //Phân trang
+        
+            if($item['status'] == 1){
+                $action = 'inactive';
+                $src = $tController->getImagesUrl('active.png', 'icons/');
+            }else{
+                $action = 'active';
+                $src = $tController->getImagesUrl('inactive.png', 'icons/');
+            }
+        
+            $lnkStatus = add_query_arg(array('action' => $action, 
+                                        'id' => $item['id'], 'paged' => $paged));
+            
+            $action = $action . '_id_' . $item['id'];
+            $name = 'security_code';
+            $lnkStatus = wp_nonce_url($lnkStatus, $action, $name);        
+        
+            $html = '<img src=' . $src . ' />';                    
+            $html = '<a href="' . $lnkStatus .'">'.$html.'</a>';
+        
+            return $html;
+        }
         
         public function column_name($item){
         
