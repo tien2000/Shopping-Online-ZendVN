@@ -3,9 +3,9 @@
 // ===================== URL =======================//
 define('TLS_SP_PLUGIN_URL'      , plugin_dir_url(__FILE__));
 define('TLS_SP_PUBLIC_URL'      , TLS_SP_PLUGIN_URL . 'public/');
-define('TLS_SP_CSS_URL'         , TLS_SP_PLUGIN_URL . 'css/');
-define('TLS_SP_JS_URL'          , TLS_SP_PLUGIN_URL . 'js/');
-define('TLS_SP_IMAGES_URL'      , TLS_SP_PLUGIN_URL . 'images/');
+define('TLS_SP_CSS_URL'         , TLS_SP_PUBLIC_URL . 'css/');
+define('TLS_SP_JS_URL'          , TLS_SP_PUBLIC_URL . 'js/');
+define('TLS_SP_IMAGES_URL'      , TLS_SP_PUBLIC_URL . 'images/');
 
 //===================== PATH =======================//
 define('DS'                         , DIRECTORY_SEPARATOR);

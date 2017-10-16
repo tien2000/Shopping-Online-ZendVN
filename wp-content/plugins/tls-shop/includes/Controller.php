@@ -85,7 +85,7 @@
             return $obj;
         }
         
-        public function getCssUrl($fileName = 'style.css', $dir = '') {
+        public function getCssUrl($fileName = '', $dir = '') {
             $url = TLS_SP_CSS_URL . $dir . $fileName . '.css';
             $headers = @get_headers($url);
             $flag = stripos($headers[0], '200 OK')?true:false;      // Kiểm tra tập tin có tồn tại ko.
@@ -94,7 +94,7 @@
             return false;
         }
         
-        public function getJSUrl($fileName = 'style.css', $dir = '') {
+        public function getJSUrl($fileName = '', $dir = '') {
             $url = TLS_SP_JS_URL . $dir . $fileName . '.js';
             $headers = @get_headers($url);
             $flag = stripos($headers[0], '200 OK')?true:false;
@@ -103,7 +103,7 @@
             return false;
         }
         
-        public function getImagesUrl($fileName = 'style.css', $dir = '') {
+        public function getImagesUrl($fileName = '', $dir = '') {
             $url = TLS_SP_IMAGES_URL . $dir . $fileName;
             $headers = @get_headers($url);
             $flag = stripos($headers[0], '200 OK')?true:false;
