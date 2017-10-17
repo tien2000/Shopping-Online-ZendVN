@@ -10,10 +10,6 @@
             
             $action = $tController->getParams('action');
             if(check_admin_referer($action, 'security_code')){
-                echo '<pre>';
-                print_r($tController->getParams());
-                echo '</pre>';
-                
                 $this->_data = $tController->getParams();
                 
                 // =========== Kiểm tra Input 'name' =============//

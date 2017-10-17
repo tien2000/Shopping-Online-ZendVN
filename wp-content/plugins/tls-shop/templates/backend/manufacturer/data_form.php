@@ -1,9 +1,18 @@
 <?php    
     global $tController;
     
-    echo '<pre>';
-    print_r($tController);
-    echo '</pre>';
+    $mes = '';
+    if (count($tController->_error) > 0){
+        $mes .= '<div class="error"><ul>';
+        foreach ($tController->_error as $key => $val){
+            $mes .= '<li>'. $val .'</li>';
+        }
+        $mes .= '</ul></div>';
+    }
+    
+    $vName = $tController->_data['name'];
+    $vSlug = $tController->_data['slug'];
+    $vStatus = $tController->_data['status'];
     
     $page   = $tController->getParams('page');    
     $action = ($tController->getParams('action') != '')? $tController->getParams('action'):'add';

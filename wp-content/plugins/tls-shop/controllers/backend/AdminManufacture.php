@@ -8,7 +8,7 @@
     class Tls_Sp_AdminManufacture_Controller{
         
         public function __construct() {
-            $this->dispatch_function();
+            $this->dispatch_function();   
         }
         
     public function dispatch_function(){
@@ -40,16 +40,23 @@
         
         public function add() {
             //echo '<br>' . __METHOD__;
-            global $tController;            
+            global $tController;  
             
             if($tController->isPost()){
                 $validate = $tController->getValidate('Manufacturer');
                 if($validate->isValidate() == false){
+                    // Có lỗi xảy ra, báo lỗi.
                     $tController->_error = $validate->getError();
                     $tController->_data = $validate->getData();
                     
                 }else{
+                    // Không có lỗi, lưu vào DB.
                     echo '<br>' . 'Lưu vào DB';
+                    $model = $tController->getModel('Manufacturer');
+                    $model->save_items($validate->getData());
+                    
+                    $url = 'admin.php?page=' . $_REQUEST['page'] . '&mes=1';
+                    wp_redirect($url);
                 }
             }
             

@@ -21,18 +21,18 @@
         public function prepare_items() {
             $hidden     = $this->get_hidden_columns();
             $sortTable  = $this->get_sortable_columns();
-            $columns     = $this->get_columns();        
+            $columns    = $this->get_columns();        
             
             $this->_column_headers = array($columns, $hidden, $sortTable);
             $this->items = $this->table_data();
             
             $total_items = $this->total_items();
-            $per_page = $this->_per_page;
+            $per_page    = $this->_per_page;
             $total_pages = ceil($total_items/$per_page);
             
             $this->set_pagination_args(array(
                 'total_items' => $total_items,
-                'per_page' => $per_page,
+                'per_page'    => $per_page,
                 'total_pages' => $total_pages,        
             ));
         }
@@ -80,23 +80,23 @@
         
         public function column_status( $item ){
             global $tController;
-            $page = $tController->getParams('page');
+            $page  = $tController->getParams('page');
             $paged = max(1, @$_REQUEST['paged']);       //Phân trang
         
             if($item['status'] == 1){
                 $action = 'inactive';
-                $src = $tController->getImagesUrl('active.png', 'icons/');
+                $src    = $tController->getImagesUrl('active.png', 'icons/');
             }else{
                 $action = 'active';
-                $src = $tController->getImagesUrl('inactive.png', 'icons/');
+                $src    = $tController->getImagesUrl('inactive.png', 'icons/');
             }
         
             $lnkStatus = add_query_arg(array('action' => $action, 
                                         'id' => $item['id'], 'paged' => $paged));
             
-            $action = $action . '_id_' . $item['id'];
-            $name = 'security_code';
-            $lnkStatus = wp_nonce_url($lnkStatus, $action, $name);        
+            $action     = $action . '_id_' . $item['id'];
+            $name       = 'security_code';
+            $lnkStatus  = wp_nonce_url($lnkStatus, $action, $name);        
         
             $html = '<img src=' . $src . ' />';                    
             $html = '<a href="' . $lnkStatus .'">'.$html.'</a>';
@@ -108,13 +108,12 @@
         
             global $tController;
         
-            $page = $tController->getParams('page');
-        
+            $page = $tController->getParams('page');        
             $name = 'security_code';
         
-            $lnkDelete =  add_query_arg(array('action'=>'delete','id'=>$item['id']));
+            $lnkDelete  =  add_query_arg(array('action'=>'delete','id'=>$item['id']));
             $action 	= 'delete_id_' . $item['id'];
-            $lnkDelete = wp_nonce_url($lnkDelete,$action,$name);
+            $lnkDelete  = wp_nonce_url($lnkDelete,$action,$name);
         
             $actions = array(
                 'edit' 		=> '<a href="?page=' . $page . '&action=edit&id=' . $item['id'] . '">Edit</a>',
@@ -189,9 +188,9 @@
             $columns = array(
                 'cb'        => '<input type="checkbox" />',                
                 'name'      => 'Name',
-                'slug'    => 'Slug',
-                'status'        => 'Status',
-                'id'      => 'ID',
+                'slug'      => 'Slug',
+                'status'    => 'Status',
+                'id'        => 'ID',
             );
             return $columns;
         }
@@ -202,9 +201,41 @@
         
         public function get_sortable_columns(){
             $sortTable = array(
-                'name'     => array('name', true),    // Tạo mũi tên sắp xếp cho Title, Id
-                'id'        => array('id', true),        // false: mũi tên lên, true: mũi tên xuống
+                'name' => array('name', true),      // Tạo mũi tên sắp xếp cho Title, Id
+                'id'   => array('id', true),        // false: mũi tên lên, true: mũi tên xuống
             );
             return $sortTable;
         }
+        
+        public function save_items($arrData = array() , $options = array()){
+            global $wpdb, $tController;
+            
+            $slug = '';
+            $action = $arrData['action'];
+            
+            if (empty($arrData['slug'])){
+                $slug = sanitize_title($arrData['name']);
+            }else {
+                $slug = sanitize_title($arrData['slug']);
+            }
+            
+            $slugHelper = $tController->getHelper('CreateSlug');
+            $slug  = $slugHelper->getSlug($slug, array('table' => 'sp_manufacture', 'field' => 'slug'));
+
+            $table = $wpdb->prefix . 'sp_manufacture';
+            $data  = array(
+                        'name'   => $arrData['name'],
+                        'slug'   => $slug,
+                        'status' => $arrData['status']
+                    );
+            $format = array('%s','%s','%s','%d');
+            
+            if ($action == 'add'){
+                $wpdb->insert($table, $data, $format);
+            }
+        }
     }
+    
+    
+    
+    

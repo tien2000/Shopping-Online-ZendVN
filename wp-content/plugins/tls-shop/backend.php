@@ -9,6 +9,10 @@
             if(isset($_GET['page'])) $this->_page = $_GET['page'];
             
             add_action('admin_menu', array($this, 'menus'));
+            
+            if ($this->_page == 'tls-sp-manager-manufactures'){
+                add_action('admin_init', array($this, 'do_output_buffer'));
+            }
         }
         
         public function menus() {
@@ -72,5 +76,9 @@
                 $obj = $tController->getController('AdminSetting', 'backend');
                 $obj->display();
             }
+        }
+        
+        public function do_output_buffer(){
+            ob_start();
         }
     }
