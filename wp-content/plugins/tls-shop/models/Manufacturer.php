@@ -1,3 +1,9 @@
+<?php 
+    /* 
+     * array_map($callback, array $array1, array $_): Biến các phần tử bên trong mảng được chọn thành số nguyên.
+     *  */
+?>
+
 <?php
     if(!class_exists('WP_List_Table')){
         require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
@@ -184,6 +190,31 @@
             return $data;
         }
         
+        public function changeStatus($arrData = array(), $options = array()){
+            global $wpdb;
+            
+            /* echo '<pre>';
+            print_r($arrData);
+            echo '</pre>'; */
+            
+            $status = ($arrData['action'] == 'active')?1:0;
+            $table    = $wpdb->prefix . 'sp_manufacture';
+            
+            if (!is_array($arrData['id'])){
+                $data = array('status' => absint($status));
+                $where = array('id' => absint($arrData['id']));
+                $wpdb->update($table, $data, $where);
+            }else {
+                $arrData['id'] = array_map('absint', $arrData['id']);
+                $ids = join(',', $arrData['id']);
+                echo '<br>' . $ids;
+                
+                $sql = "UPDATE $table SET status = $status WHERE id IN ($ids)";
+                
+                $wpdb->query($sql);
+            }
+        }        
+        
         public function getItem($arrData = array(), $options = array()){
             global $wpdb;
             
@@ -242,7 +273,8 @@
                 $optionSlug  = array('table' => 'sp_manufacture', 
                                      'field' => 'slug',
                                      'exception' => array('field' => 'id', 
-                                                          'value' => absint($arrData['id']))
+                                                          'value' => absint($arrData['id'])
+                                                    )
                                  );
             }
             
