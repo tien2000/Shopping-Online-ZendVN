@@ -15,7 +15,7 @@
                 // =========== Kiểm tra Input 'name' =============//
                 $name = $tController->getParams('name');
                 if (mb_strlen($name) < 2){
-                    $this->_errors['name'] = __('Manufacture name: Value must be greater than 1 character');
+                    $this->_errors['name'] = __('Manufacturer name: Value must be greater than 1 character');
                     $this->_data['name'] = '';
                 }
                 
