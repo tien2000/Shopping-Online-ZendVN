@@ -95,7 +95,28 @@
         }
         
         public function delete() {
-            echo '<br>' . __METHOD__;
+            //echo '<br>' . __METHOD__;
+            global $tController;
+            
+            $arrParam = $tController->getParams();
+            
+            if (!is_array($arrParam['id'])){
+                // Kiểm tra 'security_code' của 1 item.
+                $action 	= 'delete_id_' . $arrParam['id'];
+                check_admin_referer($action, 'security_code');
+            }else {
+                // Kiểm tra 'security_code' của nhiều item.
+                wp_verify_nonce('_wpnonce');
+            }
+            
+            $model = $tController->getModel('Manufacturer');
+            $model->deleteItem($arrParam);
+            
+            $paged = max(1, $arrParam['paged']);
+            
+            $url = 'admin.php?page=' . $_REQUEST['page'] . '&mes=1';
+            wp_redirect($url);
+            
         }
         
         public function status() {

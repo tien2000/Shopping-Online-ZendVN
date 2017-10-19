@@ -190,6 +190,22 @@
             return $data;
         }
         
+        public function deleteItem($arrData = array(), $options = array()){
+            global $wpdb;
+            $table    = $wpdb->prefix . 'sp_manufacture';
+            
+            if (!is_array($arrData['id'])){
+                $where = array('id' => absint($arrData['id']));
+                $wpdb->delete($table, $where);
+            }else {
+                $arrData['id'] = array_map('absint', $arrData['id']);
+                $ids = join(',', $arrData['id']);
+            
+                $sql = "DELETE FROM $table WHERE id IN ($ids)";            
+                $wpdb->query($sql);
+            }
+        }
+        
         public function changeStatus($arrData = array(), $options = array()){
             global $wpdb;
             
@@ -207,10 +223,9 @@
             }else {
                 $arrData['id'] = array_map('absint', $arrData['id']);
                 $ids = join(',', $arrData['id']);
-                echo '<br>' . $ids;
+                //echo '<br>' . $ids;
                 
-                $sql = "UPDATE $table SET status = $status WHERE id IN ($ids)";
-                
+                $sql = "UPDATE $table SET status = $status WHERE id IN ($ids)";                
                 $wpdb->query($sql);
             }
         }        
