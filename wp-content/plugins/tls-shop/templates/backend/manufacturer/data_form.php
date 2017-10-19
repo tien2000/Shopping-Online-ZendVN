@@ -10,9 +10,9 @@
         $mes .= '</ul></div>';
     }
     
-    $vName = $tController->_data['name'];
-    $vSlug = $tController->_data['slug'];
-    $vStatus = $tController->_data['status'];
+    $vName = sanitize_text_field($tController->_data['name']);
+    $vSlug = sanitize_title($tController->_data['slug']);
+    $vStatus = absint($tController->_data['status']);
     
     $page   = $tController->getParams('page');    
     $action = ($tController->getParams('action') != '')? $tController->getParams('action'):'add';

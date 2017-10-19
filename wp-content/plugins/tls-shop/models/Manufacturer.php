@@ -184,6 +184,21 @@
             return $data;
         }
         
+        public function getItem($arrData = array(), $options = array()){
+            global $wpdb;
+            
+            /* echo '<pre>';
+            print_r($arrData);
+            echo '</pre>'; */
+            
+            $id = absint($arrData['id']);
+            $table = $wpdb->prefix . 'sp_manufacture';
+            $sql = "SELECT * FROM $table WHERE id = $id";
+            $result = $wpdb->get_row($sql, ARRAY_A);           // ARRAY_A: Biến đối tượng thành mảng
+            
+            return $result;
+        }
+        
         public function get_columns() {
             $columns = array(
                 'cb'        => '<input type="checkbox" />',                
@@ -220,7 +235,18 @@
             }
             
             $slugHelper = $tController->getHelper('CreateSlug');
-            $slug  = $slugHelper->getSlug($slug, array('table' => 'sp_manufacture', 'field' => 'slug'));
+            
+            if ($action == 'add'){
+                $optionSlug  = array('table' => 'sp_manufacture', 'field' => 'slug');
+            }else if ($action == 'edit'){
+                $optionSlug  = array('table' => 'sp_manufacture', 
+                                     'field' => 'slug',
+                                     'exception' => array('field' => 'id', 
+                                                          'value' => absint($arrData['id']))
+                                 );
+            }
+            
+            $slug  = $slugHelper->getSlug($slug, $optionSlug);
 
             $table = $wpdb->prefix . 'sp_manufacture';
             $data  = array(
@@ -232,6 +258,10 @@
             
             if ($action == 'add'){
                 $wpdb->insert($table, $data, $format);
+            }
+            if ($action == 'edit'){
+                $where = array('id' => absint($arrData['id']));
+                $wpdb->update($table, $data, $where);
             }
         }
     }
