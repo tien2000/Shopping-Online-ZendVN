@@ -169,7 +169,7 @@
         
             if($tController->getParams('s') != ''){
                 $s = esc_sql($tController->getParams('s'));
-                $whereArr[] = " (m.name LIKE '%$s%') ";
+                $whereArr[] = " (m.name LIKE '%$s%' OR m.slug LIKE '%$s%') ";
             }
         
             if(count($whereArr) > 0){

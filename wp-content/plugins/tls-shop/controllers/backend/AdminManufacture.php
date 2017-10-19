@@ -31,11 +31,34 @@
 		}
 	}
         
-    public function display(){
+    public function display(){        
+	    //echo '<br/>' . __METHOD__;
         global $tController;
-	    //echo '<br/>' . __METHOD__;		
+	    
+        /* echo '<pre>';
+        print_r($tController->getParams());
+        echo '</pre>'; */
+        
+        if ($tController->getParams('action') == -1){
+            $url = $this->createUrl();            
+            wp_redirect($url);
+        }
 		
 		$tController->getView('display.php','backend/manufacturer');
+	}
+	
+	public function createUrl(){
+	    global $tController;	    
+	    $url = 'admin.php?page=' . $tController->getParams('page');
+	    
+	    if($tController->getParams('filter_status') != '0'){
+	        $url .= '&filter_status=' . $tController->getParams('filter_status');
+	    }
+	    if(mb_strlen($tController->getParams('s'))){
+	        $url .= '&s=' . $tController->getParams('s');
+	    }
+	    
+	    return $url;
 	}
         
         public function add() {
