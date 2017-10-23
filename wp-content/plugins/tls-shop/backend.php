@@ -59,7 +59,7 @@
             
             if ($page == 'tls-sp-manager-products'){
                 $obj = $tController->getController('AdminProduct', 'backend');
-                $obj->display();
+                //$obj->display();
             }
             
             if ($page == 'tls-sp-manager-manufactures'){
