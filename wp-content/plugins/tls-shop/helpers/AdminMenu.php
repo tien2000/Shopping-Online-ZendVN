@@ -29,6 +29,6 @@
         public function add_js() {
             global $tController;
             $url = $tController->getJSUrl('admin_menu');
-            wp_enqueue_script('tls_sp_admin_menu', $url, array('jquery'), '1.0.0', true);
+            wp_enqueue_script('tls_sp_admin_menu', $url, array('jquery'), '1.0.0', false);
         }
     }

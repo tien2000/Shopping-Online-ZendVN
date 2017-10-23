@@ -54,7 +54,7 @@
             
             if ($page == 'tls-sp-manager-categories'){
                 $obj = $tController->getController('AdminCategory', 'backend');
-                $obj->display();
+                //$obj->display();
             }
             
             if ($page == 'tls-sp-manager-products'){

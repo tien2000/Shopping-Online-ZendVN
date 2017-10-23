@@ -1,45 +1,145 @@
 <?php
     class Tls_Sp_AdminCategory_Controller{
         
-    public function __construct(){
+        private $_prefix_name 	= 'tls-sp-ts-category';        
+        private $_prefix_id 	= 'tls-sp-ts-category-';
+        
+        public function __construct(){
             //echo '<br>' . __METHOD__;
-            add_action('init', array($this, 'create'));
+            global $tController;
+            
+            $model = $tController->getModel('Category');
+                        
+            add_action('init', array($model, 'create'));
+            
+            if ($tController->getParams('taxonomy') == 'ts-category') {
+                add_action('ts-category_add_form_fields', array($this, 'display'));
+                
+                add_action('ts-category_edit_form_fields', array($this, 'edit'));
+                
+                add_action('admin_enqueue_scripts', array($this,'add_js_file'));
+                add_action('admin_enqueue_scripts', array($this,'add_css_file'));
+                
+                add_action('edited_ts-category', array($this, 'save'));
+                add_action('create_ts-category', array($this, 'save'));
+            }
         }
         
-        public function create() {
-            $labels = array(
-                'name'          => 'TS Categories',
-                'singular'      => 'TS Category',
-                'menu_name'     => 'TS Categories',
-                //'all_items'     => chưa xác định
-                //'view_item'     => chưa xác định
-                'edit_item'     => 'Edit TS Category',
-                'update_item'   => 'Update TS Category',
-                'add_new_item'  => 'Add New TS Category',
-                //'new_item_name'     => chưa xác định
-                //'parent_item'     => chưa xác định
-                //'parent_item_colon'     => chưa xác định
-                'search_items'  => 'Search TS Category',
-                'popular_items' => 'Popular TS Category',
-                'separate_items_with_commas'    => 'Separate tags with commas',
-                'choose_from_most_used'         => 'Choose from the most used tags',
-                'not_found'                     => 'No Categories found'
-            );
+        public function display($term){
+            //echo '<br>' . __METHOD__;
+            global $tController;
+            $htmlObj = new TlsHtml();
             
-            $args = array(
-                'labels'            => $labels,
-                'public'            => true,
-                'show_ui'           => true, // Mặc định theo public, chọn false sẽ hide.
-                'show_in_menu'      => true, // Chọn false sẽ hide ở menu nhưng vẫn chạy ('show_ui' phải true).
-                'show_in_nav_menus' => true, // Mặc định theo public, chọn false sẽ hide ở Appearance-Menu.
-                'show_tagcloud'     => true, // Chọn true sẽ thêm tùy chọn Custom Taxonomy vào thẻ Tag trong Widget.
-                'hierarchical'      => true, // Chọn true sẽ chuyển định dạng từ Tag sang Category (để phân cấp cho Custom Taxonomy).
-                'show_admin_column' => true, // Chọn true sẽ thêm 1 cột Custom Taxonomy ở All Post (hoặc Page).
-                'query_var'         => true, /*  Mặc định true. Lưu ý: Không nên thay đổi vì khi thay đổi sẽ phải viết 
-                                                   lại câu truy vấn để hiển thị các giá trị ở phần Font-end, nên để WP tự xử lý. */
-                'rewrite'           => array('slug' => 'ts-category')
-            );
+            if (is_object($term)){
+                $option_name = $this->_prefix_id . $term->term_id;
+                $option_value = get_option($option_name);
             
-            register_taxonomy('ts-category', 'tsproduct', $args);
+                echo '<pre>';
+                print_r($option_value);
+                echo '</pre>';
+            }
+            
+            $action = ($tController->getParams('action') != '')?$tController->getParams('action'):'add';
+            
+            // Tạo phần tử chứa Button
+            $inputId    = $this->create_id('button');
+            $inputName  = $this->create_id('button');
+            $inputValue = esc_attr('Media Library Images');
+            $arr        = array('class' => 'button-secondary', 'id' => $inputId);
+            $options    = array('type' => 'button');            
+            $btnMedia   = $htmlObj->button($inputName, $inputValue, $arr, $options);
+            
+            // Tạo phần tử chứa Picture
+            $inputId    = $this->create_id('picture');
+            $inputName  = $this->create_name('picture');
+            $inputValue = esc_url(@$option_value['picture']);
+            $arr        = array('size' => '40', 'id' => $inputId);
+                        
+            if ($action == 'add'){
+               $html = '<div class="form-field">'
+                           . $htmlObj->label(esc_html__('Image of Category'), array('for' => 'tag-name'))
+                           . $htmlObj->textbox($inputName, $inputValue, $arr) . ' ' . $btnMedia
+                           . $htmlObj->pTag(esc_html__('Upload image for TS Category')) .'
+                        </div>';
+               echo $html;
+               echo $htmlObj->btn_media_script($this->create_id('button'), $this->create_id('picture'));
+            }
+            else if ($action == 'edit'){
+                // Not working. Preplace with function edit().
+            }
+            
+        }
+        
+        public function edit($term){
+            global $tController;
+            $htmlObj = new TlsHtml();  
+            
+            if (is_object($term)){
+                $option_name = $this->_prefix_id . $term->term_id;
+                $option_value = get_option($option_name);
+            }
+            
+            // Tạo phần tử chứa Button
+            $inputId    = $this->create_id('button');
+            $inputName  = $this->create_id('button');
+            $inputValue = esc_attr('Media Library Images');
+            $arr        = array('class' => 'button-secondary', 'id' => $inputId);
+            $options    = array('type' => 'button');
+            $btnMedia   = $htmlObj->button($inputName, $inputValue, $arr, $options);
+            
+            // Tạo phần tử chứa Picture
+            $inputId    = $this->create_id('picture');
+            $inputName  = $this->create_name('picture');
+            $inputValue = esc_url(@$option_value['picture']);
+            $arr        = array('size' => '40', 'id' => $inputId);
+            
+            $lblPicture 	= $htmlObj->label(esc_html__('Picture'), array('for'=>$inputId));
+            $inputPicture 	= $htmlObj->textbox($inputName, $inputValue, $arr);
+            $pPicture		= $htmlObj->pTag(esc_html__('Upload image for TS category'), array('class'=>'description'));
+            $jsMedia		= $htmlObj->btn_media_script($this->create_id('button'), $this->create_id('picture'));
+            
+            $data = array();
+            $data['lblPicture']     = $lblPicture;
+            $data['inputPicture']   = $inputPicture . $btnMedia . $jsMedia;
+            $data['pPicture']       = $pPicture;
+            
+            $tController->_data = $data;
+            
+            $tController->getView('display.php','backend/category');
+        }
+        
+        public function save($term_id){
+            global $tController;
+            if($tController->isPost()){
+                /* echo '<pre>';
+                print_r($tController->getParams());
+                echo '</pre>'; */
+                
+                $option_name = $this->_prefix_id . $term_id;
+                update_option($option_name, $tController->getParams($this->_prefix_name));
+                
+                //die();
+            }
+        }
+        
+        public function add_js_file(){
+            global $tController;
+            wp_register_script("tls_sp_btn_media", $tController->getJsUrl('tls-media-button'),
+                array('jquery','media-upload','thickbox'),'1.0');
+            wp_enqueue_script("tls_sp_btn_media");
+            	
+        }
+        
+        public function add_css_file(){
+            wp_enqueue_style('thickbox');
+        }
+        
+        private function create_name($val){
+            return $this->_prefix_name . '[' . $val . ']';
+        }
+        
+        
+        private function create_id($val){
+            return $this->_prefix_id . $val;
         }
     }

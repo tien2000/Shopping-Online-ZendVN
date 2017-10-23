@@ -50,7 +50,7 @@
     // 			'rest_base'             => false,
     // 			'rest_controller_class' => false,
     // 			'_builtin'              => false,
-     			'_edit_link'            => 'post.php?post=%d',
+     			'_edit_link'            => 'post.php?&post_type=tsproduct&post=%d',
 		    );
             
             register_post_type('tsproduct', $args);
