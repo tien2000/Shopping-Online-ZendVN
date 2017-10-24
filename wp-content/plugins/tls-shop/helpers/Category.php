@@ -6,7 +6,7 @@
         }
         
         public function test() {
-            echo '<br>' . __METHOD__;
-            global $wpdb;
+            /* echo '<br>' . __METHOD__;
+            global $wpdb; */
         }
     }
