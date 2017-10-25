@@ -32,6 +32,21 @@
     		}
         }
         
+        public function getConfig($fileName = '', $dir = '') {
+            //echo '<br>' . __FILE__;
+        
+            $obj = new stdClass();
+            $file = TLS_SP_CONFIG_PATH . DS . $dir . DS . $fileName . '.php';
+            //echo '<br>' . $file;
+        
+            if (file_exists($file)){
+                require_once $file;
+                $controllerName = TLS_SP_PREFIX . $fileName . '_Config';
+                $obj = new $controllerName ();      // cách ra mới chạy được
+            }
+            return $obj;
+        }
+        
         public function getController($fileName = '', $dir = '') {
             //echo '<br>' . __FILE__;
             

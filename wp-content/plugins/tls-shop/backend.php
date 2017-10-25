@@ -10,8 +10,19 @@
             
             add_action('admin_menu', array($this, 'menus'));
             
-            if ($this->_page == 'tls-sp-manager-manufactures'){
+            if ($this->_page == 'tls-sp-manager-manufactures' || $this->_page == 'tls-sp-manager-settings'){
                 add_action('admin_init', array($this, 'do_output_buffer'));
+            }
+            
+            add_action('admin_enqueue_scripts', array($this, 'add_css_file'));
+        }
+        
+        public function add_css_file(){
+            global $tController;
+            if($tController->getParams('page') == 'tls-sp-manager-settings'){
+                wp_register_style('tls_sp_product_setting_be', $tController->getCssUrl('setting-be'),
+                    array(), '1.0');
+                wp_enqueue_style('tls_sp_product_setting_be');
             }
         }
         
@@ -74,7 +85,7 @@
             
             if ($page == 'tls-sp-manager-settings'){
                 $obj = $tController->getController('AdminSetting', 'backend');
-                $obj->display();
+                //$obj->display();
             }
         }
         
