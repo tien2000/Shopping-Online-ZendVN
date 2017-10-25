@@ -26,8 +26,7 @@
             $phpFile = $matches[1];
             
             if ($tController->getParams('post_type') == 'tsproduct'){
-                add_action('admin_enqueue_scripts', array($this, 'add_css_file'));
-                
+                add_action('admin_enqueue_scripts', array($this, 'add_css_file'));                
                 
                 if ($phpFile == 'post.php' || $phpFile == 'post-new.php'){
                     add_action('add_meta_boxes', array($this, 'display'));       
