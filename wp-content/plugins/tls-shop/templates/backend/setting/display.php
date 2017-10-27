@@ -3,6 +3,19 @@
     $lbl            = __('TShopping Settings');    
     $option_name    = 'tls_sp_setting';
     
+    $mes = '';
+    if (count($tController->_error) > 0){
+        $mes .= '<div class="error"><ul>';
+        foreach ($tController->_error as $key => $val){
+            $mes .= '<li>'. $val .'</li>';
+        }
+        $mes .= '</ul></div>';
+    }
+    
+    if(count($tController->_error) == 0){
+        $mes .='<div class="updated"><p>Update finish</p></div>';
+    }
+    
     if (!$tController->isPost()){
         $data = get_option($option_name, array());
         if (count($data) == 0){
@@ -12,7 +25,7 @@
     
     /* echo '<pre>';
     print_r($data);
-    echo '</pre>'; */    
+    echo '</pre>'; */
     
     $htmlObj        = new TlsHtml();
     //=====================================================
@@ -20,7 +33,7 @@
     //=====================================================
     $inputID 	= $option_name . '_product_number';
     $inputName 	= $option_name . '[product_number]';
-    $inputValue = $data['product_number'];
+    $inputValue = absint($data['product_number']);
     
     $arr 		= array('size' => '5', 'id' => $inputID);
     $productNumber 		= $htmlObj->label(translate('Price')) . '<br/>'
@@ -31,6 +44,7 @@
 	<h2>
 		<?php echo $lbl;?>
 	</h2>
+	<?php echo $mes;?>
 	<form method="post" action="" name="<?php echo $option_name;?>" id="<?php echo $option_name;?>" enctype= multipart/form-data>
 		<!--Show product in FrontEnd -->
     		<h3 class="title">
@@ -59,7 +73,7 @@
 		//Tao phan tu chua productNumber
 		$inputID 	= $option_name . '_currency_unit';
 		$inputName 	= $option_name . '[currency_unit]';
-		$inputValue = $data['currency_unit'];
+		$inputValue = sanitize_text_field($data['currency_unit']);
 		$arr 		= array('size' =>'5', 'id' => $inputID);
 		$currencyUnit	= $htmlObj->textbox($inputName, $inputValue, $arr);			
 			
@@ -109,7 +123,7 @@
 		//Tao phan tu chua $alertToEmail
 		$inputID 	= $option_name . '_alert_to_email';
 		$inputName 	= $option_name . '[alert_to_email]';
-		$inputValue = $data['alert_to_email'];
+		$inputValue = sanitize_email($data['alert_to_email']);
 		$arr 		= array('size' =>'25','id' => $inputID);
 		$alertToEmail	= $htmlObj->textbox($inputName,$inputValue,$arr,$options);
 		//. $htmlObj->pTag('Nhập vào 1 chuỗi khoảng 20 ký tự',array('class'=>'description'));
@@ -126,7 +140,7 @@
 		//Tao phan tu chua $emailAddress
 		$inputID 		= $option_name . '_email_address';
 		$inputName 		= $option_name . '[email_address]';
-		$inputValue 	= $data['email address'];
+		$inputValue 	= sanitize_email($data['email_address']);
 		$arr 			= array('size' =>'25','id' => $inputID);
 		$emailAddress	= $htmlObj->textbox($inputName,$inputValue,$arr);
 			
@@ -134,14 +148,14 @@
 		//Tao phan tu chua $fromName
 		$inputID 	= $option_name . '_from_name';
 		$inputName 	= $option_name . '[from_name]';
-		$inputValue = $data['from_name'];
+		$inputValue = sanitize_text_field($data['from_name']);
 		$arr 		= array('size' =>'25','id' => $inputID);
 		$fromName	= $htmlObj->textbox($inputName,$inputValue,$arr);
 			
 		//Tao phan tu chua $smtpHost
 		$inputID 	= $option_name . '_smtp_host';
 		$inputName 	= $option_name . '[smtp_host]';
-		$inputValue = $data['smtp_host'];
+		$inputValue = sanitize_text_field($data['smtp_host']);
 		$arr 		= array('size' =>'25','id' => $inputID);
 		$smtpHost	= $htmlObj->textbox($inputName,$inputValue,$arr);
 			
@@ -157,7 +171,7 @@
 		//Tao phan tu chua $smptPort
 		$inputID 	= $option_name . '_smpt_port';
 		$inputName 	= $option_name . '[smpt_port]';
-		$inputValue = $data['smpt_port'];
+		$inputValue = absint($data['smpt_port']);
 		$arr 		= array('size' =>'25','id' => $inputID);
 		$smptPort	= $htmlObj->textbox($inputName,$inputValue,$arr);
 			
@@ -170,19 +184,19 @@
 		$arr 		= array('size' =>'25','id' => $inputID);
 		$smtpAuth	= $htmlObj->radio($inputName,$inputValue,$arr,$options);
 			
-		//Tao phan tu chua $smtpPassword
-		$inputID 	= $option_name . '_smtp_password';
-		$inputName 	= $option_name . '[smtp_password]';
-		$inputValue = $data['smtp_password'];
-		$arr 		= array('size' =>'25','id' => $inputID);
-		$smtpPassword	= $htmlObj->textbox($inputName,$inputValue,$arr);
-			
 		//Tao phan tu chua $smtpUsername
 		$inputID 	= $option_name . '_smtp_username';
 		$inputName 	= $option_name . '[smtp_username]';
-		$inputValue = $data['smtp_username'];
+		$inputValue = sanitize_text_field($data['smtp_username']);
 		$arr 		= array('size' =>'25','id' => $inputID);
-		$smtpUsername	= $htmlObj->password($inputName,$inputValue,$arr);
+		$smtpUsername	= $htmlObj->textbox($inputName,$inputValue,$arr);
+			
+		//Tao phan tu chua $smtpPassword
+		$inputID 	= $option_name . '_smtp_password';
+		$inputName 	= $option_name . '[smtp_password]';
+		$inputValue = sanitize_text_field($data['smtp_password']);
+		$arr 		= array('size' =>'25','id' => $inputID);
+		$smtpPassword	= $htmlObj->password($inputName,$inputValue,$arr);
 	?>
 	
 	<!--Send mail -->
@@ -243,16 +257,16 @@
     				</tr>
     				<tr>
     					<th scope="row">
-    						<label for="mailserver_url"><?php echo __('SMTP Password')?> : </label>
+    						<label for="mailserver_url"><?php echo __('SMTP Username')?> : </label>
     					</th>
-    					<td><?php echo $smtpPassword;?></td>
+    					<td><?php echo $smtpUsername;?></td>
     				</tr>
     				
     				<tr>
     					<th scope="row">
-    						<label for="mailserver_url"><?php echo __('SMTP Username')?> : </label>
+    						<label for="mailserver_url"><?php echo __('SMTP Password')?> : </label>
     					</th>
-    					<td><?php echo $smtpUsername;?></td>
+    					<td><?php echo $smtpPassword;?></td>
     				</tr>
     			</tbody>    			
     		</table>
