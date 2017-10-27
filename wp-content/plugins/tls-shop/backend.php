@@ -60,7 +60,7 @@
             
             if ($page == 'tls-sp-manager'){
                 $obj = $tController->getController('AdminShopping', 'backend');
-                $obj->display();
+                //$obj->display();
             }
             
             if ($page == 'tls-sp-manager-categories'){
