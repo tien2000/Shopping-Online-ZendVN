@@ -5,6 +5,7 @@
         
         public function __construct() {
             //echo '<br>' . __FILE__;
+            global $tController;
             
             if(isset($_GET['page'])) $this->_page = $_GET['page'];
             
@@ -15,6 +16,8 @@
             }
             
             add_action('admin_enqueue_scripts', array($this, 'add_css_file'));
+            
+            $tController->getHelper('CreatePage');
         }
         
         public function add_css_file(){

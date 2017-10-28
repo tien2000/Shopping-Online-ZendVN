@@ -17,7 +17,7 @@
         
     ?>
     
-    <div id="tls-sp-tsproduct-show-images">	   
+    <div id="tls-sp-tlsproduct-show-images">	   
     	<?php 
     	   if (count($arrPicture) > 0){
     	       for ($i = 0; $i < count($arrPicture); $i++){
@@ -31,8 +31,8 @@
                 		</div>
                 		<div class="div-ordering">
                 			<input type="text" value="<?php echo $arrOrdering[$i];?>" class="ordering"
-                				name="tls-sp-tsproduct-img-ordering[]"><input type="hidden"
-                				name="tls-sp-tsproduct-img-url[]"
+                				name="tls-sp-tlsproduct-img-ordering[]"><input type="hidden"
+                				name="tls-sp-tlsproduct-img-url[]"
                 				value="<?php echo $arrPicture[$i];?>">
                 		</div>
                 	</div>

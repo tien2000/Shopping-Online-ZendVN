@@ -1,8 +1,8 @@
 <?php
     class Tls_Sp_AdminCategory_Controller{
         
-        private $_prefix_name 	= 'tls-sp-ts-category';        
-        private $_prefix_id 	= 'tls-sp-ts-category-';
+        private $_prefix_name 	= 'tls-sp-tls-category';        
+        private $_prefix_id 	= 'tls-sp-tls-category-';
         
         public function __construct(){
             //echo '<br>' . __METHOD__;
@@ -12,16 +12,16 @@
                         
             add_action('init', array($model, 'create'));
             
-            if ($tController->getParams('taxonomy') == 'ts-category') {
-                add_action('ts-category_add_form_fields', array($this, 'display'));
+            if ($tController->getParams('taxonomy') == 'tls-category') {
+                add_action('tls-category_add_form_fields', array($this, 'display'));
                 
-                add_action('ts-category_edit_form_fields', array($this, 'edit'));
+                add_action('tls-category_edit_form_fields', array($this, 'edit'));
                 
                 add_action('admin_enqueue_scripts', array($this,'add_js_file'));
                 add_action('admin_enqueue_scripts', array($this,'add_css_file'));
                 
-                add_action('edited_ts-category', array($this, 'save'));
-                add_action('create_ts-category', array($this, 'save'));
+                add_action('edited_tls-category', array($this, 'save'));
+                add_action('create_tls-category', array($this, 'save'));
             }
         }
         

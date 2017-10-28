@@ -8,14 +8,14 @@ jQuery(document).ready(function($){
 	
 	var taxonomy = getURLParameter('taxonomy');
 	var post_type = getURLParameter('post_type');
-	if(post_type == 'tsproduct'){
-		if(taxonomy == 'ts-category'){
-			var url ='edit-tags.php?taxonomy=ts-category&post_type=tsproduct';
+	if(post_type == 'tlsproduct'){
+		if(taxonomy == 'tls-category'){
+			var url ='edit-tags.php?taxonomy=tls-category&post_type=tlsproduct';
 			$(elemt + " a[href='" + url + "']").addClass('current').parent().addClass('current');
 		}
 		
 		if(taxonomy == undefined){
-			var url ='edit.php?post_type=tsproduct';
+			var url ='edit.php?post_type=tlsproduct';
 			$(elemt + " a[href='" + url + "']").addClass('current').parent().addClass('current');
 		}
 	}

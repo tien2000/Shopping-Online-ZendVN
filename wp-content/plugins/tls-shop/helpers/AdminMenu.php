@@ -4,7 +4,7 @@
         public function __construct() {
             add_action('admin_menu', array($this, 'modify_admin_menus'));
             
-            if (isset($_GET['post_type']) && $_GET['post_type'] == 'tsproduct'){
+            if (isset($_GET['post_type']) && $_GET['post_type'] == 'tlsproduct'){
                 add_action('admin_enqueue_scripts', array($this, 'add_js'));
             }            
         }
@@ -16,14 +16,14 @@
         
             foreach ($tls_sp_manager as $key => $val){
                 if($val[2] == 'tls-sp-manager-categories'){
-                    $tls_sp_manager[$key][2] = 'edit-tags.php?taxonomy=ts-category&post_type=tsproduct';
+                    $tls_sp_manager[$key][2] = 'edit-tags.php?taxonomy=tls-category&post_type=tlsproduct';
                 }
                 if($val[2] == 'tls-sp-manager-products'){
-                    $tls_sp_manager[$key][2] = 'edit.php?post_type=tsproduct';
+                    $tls_sp_manager[$key][2] = 'edit.php?post_type=tlsproduct';
                 }
             }
             $submenu['tls-sp-manager'] = $tls_sp_manager;
-            remove_menu_page('edit.php?post_type=tsproduct');
+            remove_menu_page('edit.php?post_type=tlsproduct');
         }
         
         public function add_js() {

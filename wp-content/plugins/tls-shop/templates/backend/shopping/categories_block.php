@@ -6,7 +6,7 @@
         'order'         => 'DESC',
         'hierarchical'   => false
         );
-    $ts_category = get_terms('ts-category', $taxonomy);
+    $ts_category = get_terms('tls-category', $taxonomy);
     
     /* echo '<pre>';
     print_r($ts_category);
@@ -29,8 +29,8 @@
 					   $i = 1;
 					   if (count($ts_category) > 0){
 					       foreach ($ts_category as $key => $val){
-					           $link = 'term.php?taxonomy=ts-category&tag_ID='. $val->term_id 
-					                       .'&post_type=tsproduct';
+					           $link = 'term.php?taxonomy=tls-category&tag_ID='. $val->term_id 
+					                       .'&post_type=tlsproduct';
 					           echo '<li class="page-count">
 							             <a href="'. $link .'">'. $i . ' - ' . $val->name . '</a>
 						             </li>';
@@ -40,7 +40,7 @@
 					?>
 				</ul>
 				<p id="wp-version-message">
-					<span id="wp-version">View all Categories <a href="edit-tags.php?taxonomy=ts-category&post_type=tsproduct">Click Here.</a>
+					<span id="wp-version">View all Categories <a href="edit-tags.php?taxonomy=tls-category&post_type=tlsproduct">Click Here.</a>
 					</span>
 				</p>
 			</div>

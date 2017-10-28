@@ -1,6 +1,6 @@
 <?php 
     $args = array(
-        'post_type'     => 'tsproduct',
+        'post_type'     => 'tlsproduct',
         'post_per_page' => 8,
         'oderby'        => 'date',
         'order'         => 'DESC',
@@ -28,7 +28,7 @@
 					<?php 
 					   $i = 1;
 					   if ($the_query->have_posts()): while ($the_query->have_posts()): $the_query->the_post();
-					   $link = 'post.php?post_type=tsproduct&post='. get_the_ID() .'&action=edit';
+					   $link = 'post.php?post_type=tlsproduct&post='. get_the_ID() .'&action=edit';
 					?>
 				
 						<li class="page-count">
@@ -42,7 +42,7 @@
 					?>
 				</ul>
 				<p id="wp-version-message">
-					<span id="wp-version">View all Products <a href="edit.php?post_type=tsproduct">Click Here.</a>
+					<span id="wp-version">View all Products <a href="edit.php?post_type=tlsproduct">Click Here.</a>
 					</span>
 				</p>
 			</div>			

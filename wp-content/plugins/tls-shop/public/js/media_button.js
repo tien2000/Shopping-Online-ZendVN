@@ -1,7 +1,7 @@
 jQuery(function($){
 	$(document).ready(function(){		
-		$('#tls-sp-tsproduct-button').click(open_media_window);		
-		tls_sp_remove_image('#tls-sp-tsproduct-show-images');
+		$('#tls-sp-tlsproduct-button').click(open_media_window);		
+		tls_sp_remove_image('#tls-sp-tlsproduct-show-images');
 	});
 	
 	function open_media_window() {
@@ -16,8 +16,8 @@ jQuery(function($){
 			var self = this;
 			this.window.on('select', function(){
 				var imgs = self.window.state().get('selection').toJSON();
-				tls_sp_insert_image('#tls-sp-tsproduct-show-images', imgs);		
-				tls_sp_remove_image('#tls-sp-tsproduct-show-images');			
+				tls_sp_insert_image('#tls-sp-tlsproduct-show-images', imgs);		
+				tls_sp_remove_image('#tls-sp-tlsproduct-show-images');			
 			});
 		}
 		this.window.open();
@@ -35,7 +35,7 @@ jQuery(function($){
 		});
 	}
 	
-	//tls-sp-tsproduct-show-images
+	//tls-sp-tlsproduct-show-images
 	function tls_sp_insert_image(img_content, imgs){
 		if($(imgs).length > 0){
 			$.each(imgs, function(key, obj){
@@ -48,8 +48,8 @@ jQuery(function($){
 				newImg += '<div> <a class="remove-img">Remove</a> </div>';
 				newImg += '<div class="div-ordering">';
 				newImg += '<input type="text" value="1" class="ordering"';
-				newImg += 'name="tls-sp-tsproduct-img-ordering[]">';
-				newImg += '<input type="hidden" name="tls-sp-tsproduct-img-url[]"';
+				newImg += 'name="tls-sp-tlsproduct-img-ordering[]">';
+				newImg += '<input type="hidden" name="tls-sp-tlsproduct-img-url[]"';
 				newImg += 'value="' + imgUrl + '">';
 				newImg += '</div>';
 				newImg += '</div>';

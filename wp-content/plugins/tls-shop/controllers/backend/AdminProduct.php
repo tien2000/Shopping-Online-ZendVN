@@ -2,8 +2,8 @@
     /* 
      * wp_enqueue_media(): Hàm WP, Bật popup Media.
      * add_filter->manage_posts_columns: Hook thêm cột vào danh sách sản phẩm. 
-     * add_filter->manage_edit-tsproduct_sortable_columns: Hook thêm link sort vào cột.
-     * add_action->manage_tsproduct_posts_custom_column: Hook đưa giá trị vào cột.
+     * add_filter->manage_edit-tlsproduct_sortable_columns: Hook thêm link sort vào cột.
+     * add_action->manage_tlsproduct_posts_custom_column: Hook đưa giá trị vào cột.
      * add_action->pre_get_posts: 
      *  */
 ?>
@@ -11,9 +11,9 @@
 <?php
     class Tls_Sp_AdminProduct_Controller{
         
-        private $_meta_box_id   = 'tls-sp-tsproduct';
-        private $_prefix_key 	= '_tls_sp_tsproduct_';
-        private $_prefix_id 	= 'tls-sp-tsproduct-';
+        private $_meta_box_id   = 'tls-sp-tlsproduct';
+        private $_prefix_key 	= '_tls_sp_tlsproduct_';
+        private $_prefix_id 	= 'tls-sp-tlsproduct-';
         
         public function __construct() {
             //echo '<br>'. __METHOD__;
@@ -25,7 +25,7 @@
             preg_match('#(?:.+\/)(.+)#', $_SERVER['SCRIPT_NAME'],$matches);
             $phpFile = $matches[1];
             
-            if ($tController->getParams('post_type') == 'tsproduct'){
+            if ($tController->getParams('post_type') == 'tlsproduct'){
                 add_action('admin_enqueue_scripts', array($this, 'add_css_file'));                
                 
                 if ($phpFile == 'post.php' || $phpFile == 'post-new.php'){
@@ -39,10 +39,10 @@
                 if ($phpFile == 'edit.php'){
                     add_filter('manage_posts_columns', array($this, 'add_columns'));
                     
-                    add_action('manage_tsproduct_posts_custom_column',
+                    add_action('manage_tlsproduct_posts_custom_column',
                         array($this, 'display_value_column'), 10, 2);
                     
-                    add_filter('manage_edit-tsproduct_sortable_columns', array($this, 'sortable_cols'));
+                    add_filter('manage_edit-tlsproduct_sortable_columns', array($this, 'sortable_cols'));
                     
                     add_action('pre_get_posts', array($this, 'modify_query'));
                     
@@ -56,10 +56,10 @@
             global $tController;
             wp_dropdown_categories(array(
                     'show_option_all'   => __('Show All TS Category'),
-                    'taxonomy'          => 'ts-category',
-                    'name'              => 'ts-category',
+                    'taxonomy'          => 'tls-category',
+                    'name'              => 'tls-category',
                     'orderby'           => 'name',
-                    'selected'          => $tController->getParams('ts-category'),
+                    'selected'          => $tController->getParams('tls-category'),
                     'hierarchical'      => true,
                     'depth'             => 3,
                     'show_count'        => true,
@@ -79,7 +79,7 @@
             $orderby = $query->get('orderby');
             //echo $orderby;
             
-            // Sắp xếp trong trường hợp $_GET['orderby'] = view && meta_key = _tls_sp_tsproduct_view  
+            // Sắp xếp trong trường hợp $_GET['orderby'] = view && meta_key = _tls_sp_tlsproduct_view  
             if ($orderby == 'view'){
                 $query->set('meta_key', $this->create_key('view'));
                 $query->set('orderby', 'meta_value_num');
@@ -87,19 +87,19 @@
             
             $query->tax_query->queries['0']['field'] = 'term_id';
             
-            if ($tController->getParams('ts-category') > 0){
+            if ($tController->getParams('tls-category') > 0){
                 // ================= Test another case ===================//
                 /* $query->tax_query->queries['0']['field'] = 'term_id';
-                   $query->tax_query->queries['0']['terms'] = $tController->getParams('ts-category'); */
+                   $query->tax_query->queries['0']['terms'] = $tController->getParams('tls-category'); */
                 // ================= Not Working. ===================//
                 
                 //Thay đổi giá trị trong đối tượng WP_Tax_Query (Lọc theo Category).
                 $tax_query = array(
                         'relation'      => 'OR',
                         array(
-                                'taxonomy'      => 'ts-category',
+                                'taxonomy'      => 'tls-category',
                                 'field'         =>  'term_id',
-                                'terms'         => $tController->getParams('ts-category')
+                                'terms'         => $tController->getParams('tls-category')
                             )
                     );                
                 $query->set('tax_query', $tax_query);
@@ -144,7 +144,7 @@
             }
             
             if ($column == 'category'){
-                echo get_the_term_list($post_id, 'ts-category', '', ', ');
+                echo get_the_term_list($post_id, 'tls-category', '', ', ');
             }
         }
         
@@ -179,10 +179,10 @@
         
         public function display() {
             add_meta_box($this->_meta_box_id, 'Images of Product', 
-                            array($this, 'product_images'), 'tsproduct');
+                            array($this, 'product_images'), 'tlsproduct');
             
             add_meta_box($this->_meta_box_id . '-detail', 'Detail Product',
-                array($this, 'detail_product'), 'tsproduct');
+                array($this, 'detail_product'), 'tlsproduct');
         }
         
         public function save($post_id){
@@ -192,7 +192,7 @@
             $wpnonce_action = $this->_meta_box_id;
             
             // Kiểm tra bảo mật với wpnonce 
-            // tls-sp-tsproduct-nonce            
+            // tls-sp-tlsproduct-nonce            
             if (!isset($arrParams[$wpnonce_name])) return $post_id;            
             if (!wp_verify_nonce($arrParams[$wpnonce_name], $wpnonce_action)) return $post_id;            
             if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return $post_id;            

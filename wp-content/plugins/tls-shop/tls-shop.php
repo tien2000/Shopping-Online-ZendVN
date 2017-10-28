@@ -21,11 +21,10 @@ if(is_admin()){
     
     require_once 'backend.php';
     new Tls_Sp_Backend();
-    $tController->getHelper('AdminMenu');
+    $tController->getHelper('AdminMenu');    
     $tController->getController('AdminCategory', 'backend');
+    $tController->getController('AdminProduct', 'backend');
 }else{
     require 'frontend.php';
     new Tls_Sp_Frontend();
 }
-
-$tController->getController('AdminProduct', 'backend');

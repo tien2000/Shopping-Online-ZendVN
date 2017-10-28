@@ -32,9 +32,9 @@
                 'show_admin_column' => true, // Chọn true sẽ thêm 1 cột Custom Taxonomy ở All Post (hoặc Page).
                 'query_var'         => true, /*  Mặc định true. Lưu ý: Không nên thay đổi vì khi thay đổi sẽ phải viết 
                                                    lại câu truy vấn để hiển thị các giá trị ở phần Font-end, nên để WP tự xử lý. */
-                'rewrite'           => array('slug' => 'ts-category')
+                'rewrite'           => array('slug' => 'tls-category')
             );
             
-            register_taxonomy('ts-category', 'tsproduct', $args);
+            register_taxonomy('tls-category', 'tlsproduct', $args);
         }
     }
