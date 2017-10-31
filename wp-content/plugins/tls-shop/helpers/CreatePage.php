@@ -38,13 +38,13 @@
     		
     		$templates = array_merge($templates, $this->_templatePage);
     		
+    		echo '<pre>';
+    		print_r($templates);
+    		echo '</pre>';
+    		
     		wp_cache_delete($cache_key, 'themes');
     		
     		wp_cache_add($cache_key, $templates, 'themes', 1800);
-    		
-    		/* echo '<pre>';
-    		print_r($templates);
-    		echo '</pre>'; */
     		
     		return $attrs;
     	}
