@@ -31,9 +31,9 @@
                 if ($phpFile == 'post.php' || $phpFile == 'post-new.php'){
                     add_action('add_meta_boxes', array($this, 'display'));       
                     if ($tController->isPost()){
-                        add_action('save_post', array($this, 'save'));
-                        add_action('admin_enqueue_scripts', array($this, 'media_button_js_file'));
+                        add_action('save_post', array($this, 'save'));                        
                     }
+                    add_action('admin_enqueue_scripts', array($this, 'media_button_js_file'));
                 }
                 
                 if ($phpFile == 'edit.php'){

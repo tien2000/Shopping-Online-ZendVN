@@ -20,4 +20,6 @@ define('TLS_SP_TEMPLATE_PATH'       , TLS_SP_PLUGIN_PATH . 'templates');
 define('TLS_SP_VALIDATE_PATH'       , TLS_SP_PLUGIN_PATH . 'validates');
 
 //===================== ORTHER =======================//
-define('TLS_SP_PREFIX'       , 'Tls_Sp_');
+define('TLS_SP_PRODUCT_URL'         , TLS_SP_PUBLIC_URL . 'products/');
+define('TLS_SP_PRODUCT_PATH'        , TLS_SP_PUBLIC_PATH . '/products');
+define('TLS_SP_PREFIX'              , 'Tls_Sp_');

@@ -25,6 +25,14 @@ if(is_admin()){
     $tController->getController('AdminCategory', 'backend');
     $tController->getController('AdminProduct', 'backend');
 }else{
+    global $tls_sp_setting;
+    
+    $tls_sp_setting = get_option('tls_sp_setting', array());
+    
+    if (count($tls_sp_setting) == 0){
+        $tls_sp_setting = $tController->getConfig('Setting')->get();
+    }      
+    
     require 'frontend.php';
     new Tls_Sp_Frontend();
 }
