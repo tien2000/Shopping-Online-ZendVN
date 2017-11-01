@@ -8,7 +8,7 @@
     global $tController, $tls_sp_setting, $wp_query, $wpQuery;
     
     /* echo '<pre>';
-    print_r($tls_sp_setting);
+    print_r($wp_query);
     echo '</pre>'; */
 ?>
 <?php if(have_posts()) while(have_posts()) : the_post();?>

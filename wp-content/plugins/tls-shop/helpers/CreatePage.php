@@ -38,9 +38,9 @@
     		
     		$templates = array_merge($templates, $this->_templatePage);
     		
-    		echo '<pre>';
+    		/* echo '<pre>';
     		print_r($templates);
-    		echo '</pre>';
+    		echo '</pre>'; */
     		
     		wp_cache_delete($cache_key, 'themes');
     		

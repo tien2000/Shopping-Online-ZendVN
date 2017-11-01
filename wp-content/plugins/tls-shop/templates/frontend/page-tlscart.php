@@ -5,7 +5,7 @@ get_header(); ?>
 			<div id="content" role="main">
 
 			<?php 
-			     echo '<br>' . __FILE__;
+			     //echo '<br>' . __FILE__;
 			     global $tController;
 			     $tController->getController('Cart', 'frontend');
 			

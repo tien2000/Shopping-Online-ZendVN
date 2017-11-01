@@ -32,7 +32,7 @@
         public function load_template($templates) {
             global $wp_query, $post;
             
-            echo '<br>is_page: ' . is_page();       // Nếu là page thì hiển thị giá trị 1.
+            //echo '<br>is_page: ' . is_page();       // Nếu là page thì hiển thị giá trị 1.
             if(is_page() == 1){
                 /* echo '<pre>';
                 print_r($post);
