@@ -18,7 +18,17 @@
             add_action('init', array($tController->getModel('Category'), 'create'));
             add_action('init', array($tController->getModel('Product'), 'create'));
             add_action('wp_enqueue_scripts', array($this, 'add_css_file'));
+            add_action('wp_enqueue_scripts', array($this, 'add_js_file'));
             add_filter('template_include', array($this, 'load_template'));          
+        }
+        
+        public function add_js_file(){
+            global $tController;
+            if (get_query_var('tlsproduct') != ''){
+                wp_register_script('tls_sp_product_fe', $tController->getJSUrl('product'), 
+                                    array('jquery'), '1.0', true);
+                wp_enqueue_script('tls_sp_product_fe');
+            }
         }
         
         public function add_css_file(){
