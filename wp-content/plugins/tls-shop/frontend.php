@@ -17,9 +17,19 @@
             
             add_action('init', array($tController->getModel('Category'), 'create'));
             add_action('init', array($tController->getModel('Product'), 'create'));
+            add_action('init', array($this, 'session_start'));
+            
             add_action('wp_enqueue_scripts', array($this, 'add_css_file'));
             add_action('wp_enqueue_scripts', array($this, 'add_js_file'));
             add_filter('template_include', array($this, 'load_template'));          
+            
+            add_action('init', array($this, 'do_output_buffer'));
+        }
+        
+        public function session_start(){
+            if (!session_id()){
+                session_start();
+            }
         }
         
         public function add_js_file(){
@@ -81,5 +91,9 @@
             echo '</pre>'; */
             
             return $templates;      // Hiển thị lại giao diện fontend
+        }
+        
+        public function do_output_buffer(){
+            ob_start();
         }
     }

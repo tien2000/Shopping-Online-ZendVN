@@ -44,9 +44,17 @@
 	   
 	   $firstImg = key($newPicArray);      // Lấy phần tử đầu tiên trong mảng
 	   
-	   echo '<pre>';
+	   /* echo '<pre>';
 	   print_r($firstImg);
-	   echo '</pre>';
+	   echo '</pre>'; */
+	   
+	   $linkAddCart = site_url('?tlsproduct=' . get_query_var('tlsproduct') . '&action=add_cart&id=' . $post->ID);
+	   
+	   $pageID = $tController->getHelper('GetPageId')->get('_wp_page_template', 'page-tlscart.php');
+	   
+	   
+	   $linkDetailCart = get_permalink($pageID);
+	   //echo $linkDetailCart;
 	?>
     <div id="tls_sp_product_detail">
     	<div class="product_imgs">
@@ -82,17 +90,36 @@
     			<li class="gift">
     				<div>Gift: <?php echo $gift;?></div>
     			</li>
-    			<li><a id="add_to_cart" class="order" product-id="259">Giỏ hàng</a></li>
+    			<li><a href="<?php echo $linkAddCart;?>" id="add_to_cart" class="order" product-id="<?php echo $post->ID;?>">Đặt hàng</a></li>
     			<li><a href="#" class="r360">Xoay ảnh 360</a>
     			</li>
-    			<li class="detail-cart">
+    			<li class="detail-cart">    			
+    				<?php 
+        				$tlsSs = $tController->getHelper('Session');
+        				$tlsSsCart = $tlsSs->get('tcart', array());
+        				$total_items = 0;
+        				if (count($total_items) > 0){
+        				    foreach ($tlsSsCart as $key => $val){
+        				        $total_items += $val;
+        				    }        				    
+        				}
+        				$str_items = $total_items . ' product';
+        				if ($total_items > 1){
+        				    $str_items = $total_items . ' products';
+        				}
+        				
+        				/* echo '<pre>';
+        				print_r($tlsSs->get('tcart'));
+        				echo '</pre>'; */
+    				?>
+    			
     				<div class="alert-cart">Your cart updated</div>
     				<div>
-    					Currently, <span class="number_product">6 products</span> in your
+    					Currently, <span class="number_product"><?php echo $str_items;?></span> in your
     					cart
     				</div>
     				<div>
-    					View details of your cart <a href="#">click here</a>
+    					View details of your cart <a href="<?php echo $linkDetailCart;?>">click here</a>
     				</div>
     
     			</li>

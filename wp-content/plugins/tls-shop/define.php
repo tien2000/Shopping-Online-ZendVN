@@ -23,3 +23,5 @@ define('TLS_SP_VALIDATE_PATH'       , TLS_SP_PLUGIN_PATH . 'validates');
 define('TLS_SP_PRODUCT_URL'         , TLS_SP_PUBLIC_URL . 'products/');
 define('TLS_SP_PRODUCT_PATH'        , TLS_SP_PUBLIC_PATH . '/products');
 define('TLS_SP_PREFIX'              , 'Tls_Sp_');
+define('TLS_SP_PLUGIN_NAME'         , 'TLS_SP_');
+define('TLS_SP_PLUGIN_VERSION'      , '1.0');

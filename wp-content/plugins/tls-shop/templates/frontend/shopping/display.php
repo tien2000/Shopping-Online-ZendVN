@@ -7,6 +7,9 @@
 <?php 
     global $tController, $tls_sp_setting, $wp_query, $wpQuery;
     
+    $tController->getHelper('Session')->set('abcCart', 'ABC 123');
+    
+    
     /* echo '<pre>';
     print_r($wp_query);
     echo '</pre>'; */
