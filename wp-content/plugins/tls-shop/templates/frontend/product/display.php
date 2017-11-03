@@ -48,12 +48,11 @@
 	   print_r($firstImg);
 	   echo '</pre>'; */
 	   
-	   $linkAddCart = site_url('?tlsproduct=' . get_query_var('tlsproduct') . '&action=add_cart&id=' . $post->ID);
+	   //$linkAddCart = site_url('?tlsproduct=' . get_query_var('tlsproduct') . '&action=add_cart&id=' . $post->ID);
 	   
-	   $pageID = $tController->getHelper('GetPageId')->get('_wp_page_template', 'page-tlscart.php');
-	   
-	   
+	   $pageID = $tController->getHelper('GetPageId')->get('_wp_page_template', 'page-tlscart.php');	   
 	   $linkDetailCart = get_permalink($pageID);
+	   
 	   //echo $linkDetailCart;
 	?>
     <div id="tls_sp_product_detail">
@@ -90,7 +89,7 @@
     			<li class="gift">
     				<div>Gift: <?php echo $gift;?></div>
     			</li>
-    			<li><a href="<?php echo $linkAddCart;?>" id="add_to_cart" class="order" product-id="<?php echo $post->ID;?>">Đặt hàng</a></li>
+    			<li><a id="add_to_cart" class="order" product-id="<?php echo $post->ID;?>">Đặt hàng</a></li>
     			<li><a href="#" class="r360">Xoay ảnh 360</a>
     			</li>
     			<li class="detail-cart">    			
@@ -98,7 +97,7 @@
         				$tlsSs = $tController->getHelper('Session');
         				$tlsSsCart = $tlsSs->get('tcart', array());
         				$total_items = 0;
-        				if (count($total_items) > 0){
+        				if (count($tlsSsCart) > 0){
         				    foreach ($tlsSsCart as $key => $val){
         				        $total_items += $val;
         				    }        				    

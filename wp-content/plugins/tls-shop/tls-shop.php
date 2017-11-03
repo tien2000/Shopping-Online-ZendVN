@@ -17,8 +17,7 @@ $tController = new tController();
 if(is_admin()){
     if(!class_exists('TlsHtml')){
         require_once TLS_SP_INLCUDE_PATH . DS . 'html.php';
-    }
-    
+    }    
     require_once 'backend.php';
     new Tls_Sp_Backend();
     $tController->getHelper('AdminMenu');    
@@ -36,3 +35,18 @@ if(is_admin()){
     require 'frontend.php';
     new Tls_Sp_Frontend();
 }
+
+// =================== Add Session =================== //
+add_action('init', 'tls_sp_session_start');
+
+function tls_sp_session_start(){
+    if (!session_id()){
+        session_start();
+    }
+}
+
+// =================== Ajax Frontend =================== //
+$tController->getController('Ajax', 'frontend');
+
+
+
