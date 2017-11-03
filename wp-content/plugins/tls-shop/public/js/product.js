@@ -1,5 +1,5 @@
 jQuery(document).ready(function($){
-	console.log('product.js');
+	//console.log('product.js');
 	$(".product_imgs .product-thumbs img").on('click', function(){
 		var data_img = $(this).attr('data-img');
 		console.log(data_img);
