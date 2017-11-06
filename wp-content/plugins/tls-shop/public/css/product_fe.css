@@ -90,7 +90,8 @@
 
 #tls_sp_product_detail .product_text .gift div {
 	padding: 5px 0px;
-	margin: 3px 0px; border-bottom : solid 1px #fff;
+	margin: 3px 0px;
+	border-bottom: solid 1px #fff;
 	background: white;
 	border-bottom: solid 1px #fff;
 }
@@ -116,9 +117,8 @@
 }
 
 #tls_sp_product_detail .product-thumbs img {
-	cursor:pointer;
+	cursor: pointer;
 }
-
 
 #tls_sp_product_detail .order {
 	background-color: #f5a623;
@@ -148,22 +148,74 @@
 	margin: 3px 0px;
 }
 
-#tls_sp_product_detail li.detail-cart{
+#tls_sp_product_detail li.detail-cart {
 	padding: 5px;
 	text-align: center;
-  	border: 1px solid #ccc;
-  	background-color: #bde0f1;
+	border: 1px solid #ccc;
+	background-color: #bde0f1;
 }
 
-#tls_sp_product_detail span.number_product{
+#tls_sp_product_detail span.number_product {
 	font-weight: bold;
 }
 
-#tls_sp_product_detail .alert-cart{
+#tls_sp_product_detail .alert-cart {
 	background-color: white;
 	color: red;
 	display: none;
 }
+
+/*---------------HIEN THI CÁC SẢN PHẨM TRONG GIỎ HÀNG ------------------------*/
+#tls_sp_cart_table {
+	
+}
+
+#tls_sp_cart_table .remove-product,.update-product {
+	cursor: pointer;
+	color: green;
+	text-decoration: underline;
+}
+
+#tls_sp_cart_table .show-alert {
+	height: 25px;
+	line-height: 25px;
+	margin-bottom: 7px;
+	padding: 0px 10px;
+}
+
+.cart-delete{
+	background-color: #FFC2B2;
+}
+
+.cart-update{
+	background-color: #bde0f1;
+}
+
+#total{
+	text-align: right;
+}
+
+
+/*---------------FORM THONG TIN KHACH HANG ------------------------*/
+#custom_infomation{
+	  margin-top: 10px;
+}
+
+#custom_infomation .custom_infomation_table{
+	
+}
+
+#custom_infomation .custom_infomation_table .label{
+	width: 30%;
+	font-weight: bold;
+	border-right: solid 1px #e7e7e7;
+	vertical-align: top;
+}
+
+
+
+
+
 
 
 

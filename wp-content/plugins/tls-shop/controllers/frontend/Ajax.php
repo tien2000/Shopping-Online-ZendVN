@@ -3,8 +3,37 @@
         
         public function __construct() {
             add_action('wp_ajax_add_to_cart', array($this, 'add_to_cart'));
+            //add_action('wp_ajax_nopriv_add_to_cart', array($this, 'add_to_cart'));  // Bổ sung thêm nếu ajax ko hoạt động.
+            
+            add_action('wp_ajax_update_cart', array($this, 'update_cart'));
+            
             add_action('wp_enqueue_scripts', array($this, 'add_js_file'));
             add_action('wp_head', array($this, 'add_ajax_library'));
+        }
+        
+        public function update_cart(){
+            check_ajax_referer('ajax-security-code', 'security');       // Kiểm tra mã bảo mật của ajax.
+            
+            //echo __METHOD__;
+            
+            global $tController;
+            
+            $postID     = $tController->getParams('value');
+            $price      = $tController->getParams('price');
+            $quality    = $tController->getParams('quality');
+            
+            if (absint($postID) > 0){
+                $tlsSs = $tController->getHelper('Session');
+                $tlsSsCart = $tlsSs->get('tcart', array());
+                
+                $tlsSsCart[$postID] = $quality;
+                
+                $tlsSs->set('tcart', $tlsSsCart);
+            }
+            
+            echo ($price * $quality);
+            
+            die();          // Hàm hỗ trợ Ajax nên phải hỗ trợ lệnh die()
         }
         
         public function add_to_cart(){
@@ -46,15 +75,21 @@
                 $str_items = $total_items . ' products';
             }
             echo $str_items;
-            die();
+            die();          // Hàm hỗ trợ Ajax nên phải hỗ trợ lệnh die()
         }
         
         public function add_js_file(){
             global $tController;
-            if (get_query_var('tlsproduct') != ''){
+            
+            $pageID = $tController->getHelper('GetPageId')->get('_wp_page_template', 'page-tlscart.php');
+            if (get_query_var('tlsproduct') != '' || $pageID != false){
                 wp_register_script('tls_sp_add_to_cart', $tController->getJSUrl('ajax_add_cart'),
                     array('jquery'), '1.0', true);
                 wp_enqueue_script('tls_sp_add_to_cart');
+                
+                wp_register_script('tls_sp_accounting', $tController->getJSUrl('accounting.min'),
+                    array('jquery'), '1.0', true);
+                wp_enqueue_script('tls_sp_accounting');
             }
         }
         
