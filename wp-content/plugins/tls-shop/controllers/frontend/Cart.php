@@ -9,11 +9,23 @@
             global $tController;
         
             $action = $tController->getParams('action');
+            $payment = $tController->getParams('payment');
+            
+            /* echo '<pre>';
+            print_r($tController->getParams());
+            echo '</pre>'; */
+            
+            if ($action == '' && $payment != ''){
+                $action = $payment;
+            }
             
             switch ($action){
                 case 'add_to_cart' : $this->add_to_cart(); break;
                 case 'update_cart' : $this->update_cart(); break;
                 case 'delete_cart' : $this->delete_cart(); break;
+                
+                case 'send_mail'   : $this->send_mail(); break;
+                case 'paypal'      : $this->paypal(); break;
                 
                 default: $this->display(); break;
             }
@@ -23,6 +35,25 @@
             global $tController;
             
             $tController->getView('display.php', 'frontend/cart');
+            $tController->getView('payment.php', 'frontend/cart');
+        }
+        
+        public function send_mail(){
+            //echo '<br>' . __METHOD__;
+            
+            global $tController;
+            
+            $type = $tController->getParams('type');
+            if ($type == 'send'){
+                // Kiểm tra dữ liệu có hợp lệ hay ko (Viết hàm Validate)
+            }
+            
+            $tController->getView('display.php', 'frontend/cart');
+            $tController->getView('sent_mail.php', 'frontend/cart');
+        }
+        
+        public function paypal(){
+            echo '<br>' . __METHOD__;
         }
         
         public function delete_cart(){

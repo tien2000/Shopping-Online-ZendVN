@@ -13,23 +13,22 @@ require_once 'define.php';
 require_once TLS_SP_INLCUDE_PATH . DS . 'Controller.php';
 global $tController;
 $tController = new tController();
-
-if(is_admin()){
-    if(!class_exists('TlsHtml')){
-        require_once TLS_SP_INLCUDE_PATH . DS . 'html.php';
-    }    
+if(!class_exists('TlsHtml')){
+    require_once TLS_SP_INLCUDE_PATH . DS . 'html.php';
+}
+if(is_admin()){       
     require_once 'backend.php';
     new Tls_Sp_Backend();
     $tController->getHelper('AdminMenu');    
     $tController->getController('AdminCategory', 'backend');
     $tController->getController('AdminProduct', 'backend');
 }else{
-    global $tls_sp_setting;
+    global $tls_sp_settings;
     
-    $tls_sp_setting = get_option('tls_sp_setting', array());
+    $tls_sp_settings = get_option('tls_sp_setting', array());
     
-    if (count($tls_sp_setting) == 0){
-        $tls_sp_setting = $tController->getConfig('Setting')->get();
+    if (count($tls_sp_settings) == 0){
+        $tls_sp_settings = $tController->getConfig('Setting')->get();
     }      
     
     require 'frontend.php';
