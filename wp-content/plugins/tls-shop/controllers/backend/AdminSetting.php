@@ -11,7 +11,7 @@
             
             if ($tController->isPost()){
                 $validate = $tController->getValidate('Setting');                
-                $tls_sp_setting = $tController->getParams('tls_sp_setting');
+                $tls_sp_settings = $tController->getParams('tls_sp_setting');
                 
                 if($validate->isValidate() == false){
                     // Có lỗi xảy ra, báo lỗi.                    
@@ -20,7 +20,7 @@
                 }else{
                     // Không có lỗi, lưu vào DB.
                     echo '<br>' . 'Lưu vào DB';
-                    update_option('tls_sp_setting', $tls_sp_setting, 'yes');    // Lưu vào DB
+                    update_option('tls_sp_setting', $tls_sp_settings, 'yes');    // Lưu vào DB
                     
                     /* echo '<pre>';
                     print_r($tController->getParams());

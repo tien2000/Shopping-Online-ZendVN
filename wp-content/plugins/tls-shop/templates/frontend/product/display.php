@@ -6,7 +6,7 @@
 ?>
 
 <?php 
-    global $wp_query, $post, $tController, $tls_sp_setting;    
+    global $wp_query, $post, $tController, $tls_sp_settings;    
     $meta_key = '_tls_sp_tlsproduct_';
 ?>
 <?php if (have_posts()): while (have_posts()): the_post();?>
@@ -21,8 +21,8 @@
 	   
 	   $manufacturer = $result['name'];
 	   
-	   $price      = get_post_meta($post->ID, $meta_key . 'price',true) . ' ' . $tls_sp_setting['currency_unit'];
-	   $saleOff    = get_post_meta($post->ID, $meta_key . 'sale-off',true) . ' ' . $tls_sp_setting['currency_unit'];
+	   $price      = get_post_meta($post->ID, $meta_key . 'price',true) . ' ' . $tls_sp_settings['currency_unit'];
+	   $saleOff    = get_post_meta($post->ID, $meta_key . 'sale-off',true) . ' ' . $tls_sp_settings['currency_unit'];
 	   
 	   $cssPrice = '';
 	   if (get_post_meta($post->ID, $meta_key . 'sale-off',true) > 0){

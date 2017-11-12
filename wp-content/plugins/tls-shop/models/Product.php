@@ -2,13 +2,13 @@
     class Tls_Sp_Product_Model{
         
         public function getAllProduct(){
-            global $tls_sp_setting;
+            global $tls_sp_settings;
             
             $paged = max(1, get_query_var('paged'));
-            $offset = ($paged - 1)* $tls_sp_setting['product_number'];
+            $offset = ($paged - 1)* $tls_sp_settings['product_number'];
             $args = array(
                 'post_type' => 'tlsproduct',
-                'posts_per_page'=> $tls_sp_setting['product_number'],
+                'posts_per_page'=> $tls_sp_settings['product_number'],
                 'offset'        => $offset,
                 'paged'         => $paged
             );

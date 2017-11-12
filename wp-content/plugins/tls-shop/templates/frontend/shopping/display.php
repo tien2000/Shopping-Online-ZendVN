@@ -5,7 +5,7 @@
 ?>
 
 <?php 
-    global $tController, $tls_sp_setting, $wp_query, $wpQuery;
+    global $tController, $tls_sp_settings, $wp_query, $wpQuery;
     
     $tController->getHelper('Session')->set('abcCart', 'ABC 123');
     
@@ -36,8 +36,8 @@
     	       $img = $imgThumbnail->getImages($postID, array('type' => 'resize', 
     	                                                   'width' => $width, 'height' => $height));
     	       $meta_key = '_tls_sp_tlsproduct_';
-    	       $price = get_post_meta($postID, $meta_key . 'price',true) . ' ' . $tls_sp_setting['currency_unit'];
-    	       $saleOff = get_post_meta($postID, $meta_key . 'sale-off',true) . ' ' . $tls_sp_setting['currency_unit'];
+    	       $price = get_post_meta($postID, $meta_key . 'price',true) . ' ' . $tls_sp_settings['currency_unit'];
+    	       $saleOff = get_post_meta($postID, $meta_key . 'sale-off',true) . ' ' . $tls_sp_settings['currency_unit'];
     	       
     	       $cssPrice = '';
     	       if (get_post_meta($postID, $meta_key . 'sale-off',true) > 0){
