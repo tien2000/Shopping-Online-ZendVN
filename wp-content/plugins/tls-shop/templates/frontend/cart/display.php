@@ -27,35 +27,36 @@
                 			</tr>
                 		</thead>                
                 		<tbody>';	
-    $meta_key = '_tls_sp_tlsproduct_';
-    if (count($idArr)){
-        $args = array(
-            'post_type'    => 'tlsproduct',
-            'post__in'      => $idArr
-        );
-        
-        $wpQuery = new WP_Query($args);
-        
-        while ($wpQuery->have_posts()){
-            $wpQuery->the_post();
-            $post = $wpQuery->post;
-            $postID = $post->ID;
-            $title = $post->post_title;
+	   
+            $meta_key = '_tls_sp_tlsproduct_';
+            if (count($idArr)){
+                $args = array(
+                    'post_type'    => 'tlsproduct',
+                    'post__in'      => $idArr
+                );
             
-            $price = get_post_meta($postID, $meta_key . 'price', true);
-            //echo '<br>' . $price;
+            $wpQuery = new WP_Query($args);
             
-            $saleOff = get_post_meta($postID, $meta_key . 'sale-off', true);
-            //echo '<br>' . $saleOff;
-            
-            if (absint($saleOff) > 0){
-                $price = $saleOff;
-            }
-            
-            $quality = $tlsSsCart[$postID];
-            $money = $price * $quality;
-            $linkUpdate = '<a class="update-product" product-id="' . $postID . '" product-price="'. $price .'">Update</a>';
-            $linkRemove = '<a class="remove-product" product-id="' . $postID . '">Remove</a>';
+            while ($wpQuery->have_posts()){
+                $wpQuery->the_post();
+                $post = $wpQuery->post;
+                $postID = $post->ID;
+                $title = $post->post_title;
+                
+                $price = get_post_meta($postID, $meta_key . 'price', true);
+                //echo '<br>' . $price;
+                
+                $saleOff = get_post_meta($postID, $meta_key . 'sale-off', true);
+                //echo '<br>' . $saleOff;
+                
+                if (absint($saleOff) > 0){
+                    $price = $saleOff;
+                }
+                
+                $quality = $tlsSsCart[$postID];
+                $money = $price * $quality;
+                $linkUpdate = '<a class="update-product" product-id="' . $postID . '" product-price="'. $price .'">Update</a>';
+                $linkRemove = '<a class="remove-product" product-id="' . $postID . '">Remove</a>';
         	
        $cartHTML .= '<tr>
         				<td>'. $postID .'</td>

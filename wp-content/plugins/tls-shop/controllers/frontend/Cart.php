@@ -55,16 +55,9 @@
             global $tController, $tls_sp_settings;
             
             $type = $tController->getParams('type');
+            
             if ($type == 'send'){
                 // Kiểm tra dữ liệu có hợp lệ hay ko (Viết hàm Validate)
-                
-                /* echo '<pre>';
-                print_r($tController->getParams());
-                echo '</pre>';
-                
-                echo '<pre>';
-                print_r($tls_sp_settings);
-                echo '</pre>'; */
                 
             // Lấy ra sản phẩm của KH đã mua
                 $tlsSs = $tController->getHelper('Session');
@@ -83,10 +76,13 @@
     			$content .= '<br/>Comment: ' 			. $tController->getParams('comment');			
     			$content .= '<br><br><h3>Your cart';
     			$content .= '<br/>===============================</h3>';
-    			$content .=  '<div id="zendvn_sp_cart_table">' . $mailHTML . '</div>';
+    			$content .=  '<div id="tls_sp_cart_table">' . $mailHTML . '</div>';
     			
     			//echo $content;
     			
+    			
+    			
+			// ==================== Xử lý Email ===================== //
     			$flagSend = false;
                 
                 if ($tls_sp_settings['select_type'] == 'system'){
@@ -97,14 +93,17 @@
                 
                 if ($flagSend == true){
                     // Lưu vào DB.
+                    $invoicesModel = $tController->getModel('Invoices');
+    			    $invoicesModel->save_items($tController->getParams(), array('action' => 'add'));
                 }
+			// ======================================================= //
                 
                 $url = site_url('?page_id=' . get_query_var('page_id') . '&action=alert&mes=' . $flagSend);
-                //wp_redirect($url);
+                wp_redirect($url);
             }
             
-            /* $tController->getView('display.php', 'frontend/cart');
-            $tController->getView('sent_mail.php', 'frontend/cart'); */
+            $tController->getView('display.php', 'frontend/cart');
+            $tController->getView('sent_mail.php', 'frontend/cart');
         }
         
         public function alert(){

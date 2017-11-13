@@ -16,7 +16,7 @@
 
     <div id="payment">
     	<form method="post" id="paymentform" name="paymentform" action="">
-    		<select name="payment" id="ils_sp_setting_payment">
+    		<select name="payment" id="tls_sp_setting_payment">
     			<?php 
     		          foreach ($paymentSetting as $key => $val){
     		              echo '<option value="'. $val .'">' . $paymentDefault[$val] . '</option>';
